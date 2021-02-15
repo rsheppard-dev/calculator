@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Button from "./components/Button";
+import Display from "./components/Display";
 
 function App() {
+  const [input, setInput] = useState('');
+  const [currentNumber, setCurrentNumber] = useState('0');
+  const [operator, setOperator] = useState(undefined);
+
+  const buttons = [
+    { label: 'AC', id: 'clear', class: 'reset'},
+    { label: '±', id: 'negative', class: 'negative'},
+    { label: 'x', id: 'multiply', class: 'operator'},
+    { label: 7, id: 'seven', class: 'number'},
+    { label: 8, id: 'eight', class: 'number'},
+    { label: 9, id: 'nine', class: 'number'},
+    { label: '÷', id: 'divide', class: 'operator'},
+    { label: 4, id: 'four', class: 'number'},
+    { label: 5, id: 'five', class: 'number'},
+    { label: 6, id: 'six', class: 'number'},
+    { label: '-', id: 'subtract', class: 'operator'},
+    { label: 1, id: 'one', class: 'number'},
+    { label: 2, id: 'two', class: 'number'},
+    { label: 3, id: 'three', class: 'number'},
+    { label: '+', id: 'add', class: 'operator'},
+    { label: 0, id: 'zero', class: 'zero'},
+    { label: '.', id: 'decimal', class: 'decimal'},
+    { label: '=', id: 'equals', class: 'equals'}
+  ];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <div className="calculator">
+       <Display input={input} currentNumber={currentNumber} operator={operator} />
+       <div className="keyboard">
+        <div className="button-container">
+          {buttons.map((btn, index) => {
+            return (
+              <Button key={index} btn={btn} input={input} setInput={setInput} currentNumber={currentNumber} setCurrentNumber={setCurrentNumber} operator={operator} setOperator={setOperator} />
+            )
+          })}
+        </div>
+        <div className="speaker"></div>       
+       </div>
+     </div>
     </div>
   );
 }

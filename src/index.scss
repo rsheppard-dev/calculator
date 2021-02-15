@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+@mixin align($position) {
+  display: flex;
+  justify-content: $position;
+  align-items: $position;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.App {
+  @include align(center);
+  background: #EEEEEE;
+  height: 100vh;
+}
+
+.calculator {
+  position: relative;
+  background: #22252D;
+  border-radius: 20px;
+  width: 280px;
+
+  .display {
+    padding: 20px 30px;
+    height: 200px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    .sum, .total {
+      word-break: break-all;
+      word-wrap: break-word;
+      text-align: right;
+    }
+
+    .sum {
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .total {
+      font-size: 30px;
+      font-weight: 700;
+    }
+  }
+
+  .keyboard {
+    @include align(center);
+    flex-direction: column;
+    background: #292D36;
+    width: 100%;
+    border-radius: 20px;
+
+    .button-container {
+      display: grid;
+      justify-content: center;
+      gap: 10px;
+      grid-template-columns: repeat(4, 50px);
+      grid-template-rows: repeat(5, 50px);
+      width: 100%;
+      padding: 15px 30px;
+
+      .btn {
+        width: 100%;
+        background: #22252D;
+        border: none;
+        border-radius: 5px;
+        font-weight: 400;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .operator, .equals {
+    color: #D96161;
+  }
+
+  .negative, .number, .zero, .decimal {
+    color: #fff;
+  }
+
+  .reset {
+    color: #2CB39C;
+  }
+
+  .zero, .reset {
+    grid-column: span 2;      
+  }
+
+  .speaker {
+    margin-bottom: 15px;
+    background: #474B52;
+    width: 40%;
+    height: 5px;
+    border-radius: 20px;
+  }
+}
+
+.variables {
+  position: absolute;
+  top: 0;
+}
