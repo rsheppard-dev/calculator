@@ -1,13 +1,21 @@
+import { useState } from 'react';
+
 const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previousNumber, setPreviousNumber, operator, setOperator }) => {
+
+    const [equalPressed, setEqualPressed] = useState(false);
 
     const className = `btn ${btn.class}`;
 
     // my safe version of the eval() function
-    const safeEval = () => {
-        const inputArray = input.split(' ');
+    const safeEval = (newInput) => {
+        // return if input is empty
+        if (!input) {
+            return currentNumber;
+        }
+
+        const inputArray = newInput ? newInput.split(' ') : input.split(' ');
         const numbers = [];
         const operators = [];
-        console.log(inputArray);
 
         // capture numbers and operators from input state
         for (let i = 0; i < inputArray.length; i++) {
@@ -42,6 +50,7 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
         setInput('');
         setCurrentNumber('0');
         setOperator(undefined);
+        setEqualPressed(false);
     }
 
     // converts positive numbers to negative and vice-versa
@@ -51,7 +60,7 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
         if (Math.sign(Number(currentNumber)) < 0) {
             setInput(input.replace(regex, Math.abs(currentNumber)));
             setCurrentNumber(Math.abs(currentNumber));
-        } else {
+        } else if (Math.sign(Number(currentNumber)) > 0) {
             setInput(input.replace(regex, -Math.abs(currentNumber)));
             setCurrentNumber(-Math.abs(currentNumber));
         }
@@ -59,18 +68,29 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
 
     // add new numbers to state
     const appendNumber = num => {
-        setInput(`${input}${num}`)
-        setCurrentNumber(Number(`${currentNumber}${num}`).toString());
+        if (equalPressed) {
+            setCurrentNumber(Number(num).toString());
+            setInput(num);
+            setEqualPressed(false);
+        } else {
+            setCurrentNumber(Number(`${currentNumber}${num}`).toString());
+            setInput(`${input}${num}`); 
+        }
     }
 
     // add operator to formula
     const appendOperator = op => {
-        if (currentNumber === '0') {
+        let newInput = undefined;
+
+        if (input.endsWith('</span> ')) { // change operator if previously set
+            newInput = input.substring(0, input.length - 35);
+            setInput(`${newInput} <span class="operator"> ${op} </span> `);
+        } else if (currentNumber === '0') { // check a number has been set first
             return;
         } else {
             setInput(`${input} <span class="operator"> ${op} </span> `);
-            setCurrentNumber('0');
         }
+        setCurrentNumber('0');
         setOperator(op);
     }
 
@@ -86,12 +106,15 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
 
     // calculate current sum in the input state
     const calculateSum = () => {
+        setEqualPressed(true);
+        let newInput = undefined;
+        
+        // remove operator if input ends in one
         if (input.endsWith('</span> ')) {
-            const newInput = input.substring(0, input.length - 35);
+            newInput = input.substring(0, input.length - 35);
             setInput(newInput);
         }
-
-        setCurrentNumber(safeEval());
+        setCurrentNumber(safeEval(newInput));
     }
 
     // action response to button clicks
