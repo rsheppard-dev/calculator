@@ -25,7 +25,7 @@
   border-radius: 20px;
   width: 280px;
 
-  .display {
+  #screen {
     padding: 20px 30px;
     height: 200px;
     color: #fff;
@@ -34,18 +34,18 @@
     align-items: flex-end;
     justify-content: flex-end;
 
-    .sum, .total {
+    #sum, #display {
       word-break: break-all;
       word-wrap: break-word;
       text-align: right;
     }
 
-    .sum {
+    #sum {
       font-size: 15px;
       font-weight: 400;
     }
 
-    .total {
+    #display {
       font-size: 30px;
       font-weight: 700;
     }

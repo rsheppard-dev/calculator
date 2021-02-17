@@ -21,7 +21,7 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
                 operators.push(inputArray[i]);
             }
         }
-
+        
         // calculate sum from current inputs
         const reducer = (total, value, index) => {
             switch (operators[index - 1]) {
@@ -65,12 +65,15 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
     // add new numbers to state
     const appendNumber = num => {
         if (equalPressed) {
-            setCurrentNumber(Number(`${num}`).toString());
+            setCurrentNumber(`${num}`);
             setInput(`${num}`);
             setEqualPressed(false);
+        } else if (currentNumber === '0') {
+            setCurrentNumber(`${num}`);
+            setInput(`${input}${num}`);
         } else {
-            setCurrentNumber(Number(`${currentNumber}${num}`).toString());
-            setInput(`${input}${num}`); 
+            setCurrentNumber(`${currentNumber}${num}`);
+            setInput(`${input}${num}`);
         }
     }
 
@@ -81,16 +84,25 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
         if (equalPressed) {
             setEqualPressed(false);
         }
-        
-        if (input.endsWith('</span> ')) { // change operator if previously set
-            newInput = input.substring(0, input.length - 35);
-            setInput(`${newInput} <span class="operator"> ${op} </span> `);
+
+        if (input.endsWith('</span> ') || input.endsWith('-')) {  // check if operator already active
+            if (op === '-') { // check if second minus operator - make negative
+                setCurrentNumber('-');
+                setInput(`${input}-`)
+            } else { // replace other operators with new choice
+                newInput = input.endsWith('-') ?
+                    input.substring(0, input.length - 36) :
+                    input.substring(0, input.length - 35);
+
+                setInput(`${newInput} <span class="operator"> ${op} </span> `);
+                setCurrentNumber('0'); 
+            }       
         } else if (currentNumber === '0') { // check a number has been set first
             return;
         } else {
             setInput(`${input} <span class="operator"> ${op} </span> `);
+            setCurrentNumber('0');  
         }
-        setCurrentNumber('0');
         setOperator(op);
     }
 

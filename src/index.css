@@ -28,7 +28,7 @@
   width: 280px;
 }
 
-.calculator .display {
+.calculator #screen {
   padding: 20px 30px;
   height: 200px;
   color: #fff;
@@ -47,18 +47,18 @@
           justify-content: flex-end;
 }
 
-.calculator .display .sum, .calculator .display .total {
+.calculator #screen #sum, .calculator #screen #display {
   word-break: break-all;
   word-wrap: break-word;
   text-align: right;
 }
 
-.calculator .display .sum {
+.calculator #screen #sum {
   font-size: 15px;
   font-weight: 400;
 }
 
-.calculator .display .total {
+.calculator #screen #display {
   font-size: 30px;
   font-weight: 700;
 }
