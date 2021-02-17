@@ -1,8 +1,4 @@
-import { useState } from 'react';
-
-const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previousNumber, setPreviousNumber, operator, setOperator }) => {
-
-    const [equalPressed, setEqualPressed] = useState(false);
+const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previousNumber, setPreviousNumber, operator, setOperator, equalPressed, setEqualPressed }) => {
 
     const className = `btn ${btn.class}`;
 
@@ -69,8 +65,8 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
     // add new numbers to state
     const appendNumber = num => {
         if (equalPressed) {
-            setCurrentNumber(Number(num).toString());
-            setInput(num);
+            setCurrentNumber(Number(`${num}`).toString());
+            setInput(`${num}`);
             setEqualPressed(false);
         } else {
             setCurrentNumber(Number(`${currentNumber}${num}`).toString());
@@ -82,6 +78,10 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
     const appendOperator = op => {
         let newInput = undefined;
 
+        if (equalPressed) {
+            setEqualPressed(false);
+        }
+        
         if (input.endsWith('</span> ')) { // change operator if previously set
             newInput = input.substring(0, input.length - 35);
             setInput(`${newInput} <span class="operator"> ${op} </span> `);

@@ -6,6 +6,7 @@ function App() {
   const [input, setInput] = useState('');
   const [currentNumber, setCurrentNumber] = useState('0');
   const [operator, setOperator] = useState(undefined);
+  const [equalPressed, setEqualPressed] = useState(false);
 
   const buttons = [
     { label: 'AC', id: 'clear', class: 'reset'},
@@ -36,7 +37,7 @@ function App() {
         <div className="button-container">
           {buttons.map((btn, index) => {
             return (
-              <Button key={index} btn={btn} input={input} setInput={setInput} currentNumber={currentNumber} setCurrentNumber={setCurrentNumber} operator={operator} setOperator={setOperator} />
+              <Button key={index} btn={btn} input={input} setInput={setInput} currentNumber={currentNumber} setCurrentNumber={setCurrentNumber} operator={operator} setOperator={setOperator} equalPressed={equalPressed} setEqualPressed={setEqualPressed} />
             )
           })}
         </div>
