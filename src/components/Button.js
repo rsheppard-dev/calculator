@@ -86,7 +86,9 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
         }
 
         if (input.endsWith('</span> ') || input.endsWith('-')) {  // check if operator already active
-            if (op === '-') { // check if second minus operator - make negative
+            if (input.endsWith('</span> -')) { // prevent infinite minus signs
+                return;
+            } else if (op === '-') { // check if second minus operator - make negative
                 setCurrentNumber('-');
                 setInput(`${input}-`)
             } else { // replace other operators with new choice
