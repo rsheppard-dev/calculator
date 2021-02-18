@@ -35,11 +35,10 @@ function App() {
        <Display input={input} currentNumber={currentNumber} operator={operator} />
        <div className="keyboard">
         <div className="button-container">
-          {buttons.map((btn, index) => {
-            return (
-              <Button key={index} btn={btn} input={input} setInput={setInput} currentNumber={currentNumber} setCurrentNumber={setCurrentNumber} operator={operator} setOperator={setOperator} equalPressed={equalPressed} setEqualPressed={setEqualPressed} />
+          {buttons.map(btn => (
+              <Button key={btn.id} btn={btn} input={input} setInput={setInput} currentNumber={currentNumber} setCurrentNumber={setCurrentNumber} operator={operator} setOperator={setOperator} equalPressed={equalPressed} setEqualPressed={setEqualPressed} />
             )
-          })}
+          )}
         </div>
         <div className="speaker"></div>       
        </div>

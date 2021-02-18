@@ -86,9 +86,7 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
         }
 
         if (input.endsWith('</span> ') || input.endsWith('-')) {  // check if operator already active
-            if (input.endsWith('</span> -')) { // prevent infinite minus signs
-                return;
-            } else if (op === '-') { // check if second minus operator - make negative
+            if (op === '-') { // check if second minus operator - make negative
                 setCurrentNumber('-');
                 setInput(`${input}-`)
             } else { // replace other operators with new choice
@@ -140,13 +138,14 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
             case 'negative':
                 reverseNumber();
                 break;
-            case 'zero': // do not allow number to start with zero
-                if (currentNumber === '0') {
-                    break;
-                }
-            // eslint-disable-next-line
+            case 'zero':
             case 'number':
-                appendNumber(value);
+                // do not allow number to start with zero
+                if (type === 'zero' && currentNumber === '0') {
+                    break;
+                } else {
+                    appendNumber(value);
+                }
                 break;
             case 'operator':
                 appendOperator(value);
@@ -158,7 +157,7 @@ const Button = ({ btn, input, setInput, currentNumber, setCurrentNumber, previou
                 calculateSum();
                 break;
             default:
-                return currentNumber;
+                break;
         }
     }
 
